@@ -1,0 +1,31 @@
+{
+    "flashCards": [
+        {
+            "id": "1",
+            "question": "Which country won the 2018 FIFA World Cup?",
+            "answer": "France",
+            "createdDate": " ",
+            "modifiedDate": " ",
+            "difficultyLevel": "Medium",
+            "category": "Sports"
+        },
+        {
+            "id": "2",
+            "question": "What is the national sport of Canada?",
+            "answer": "Lacrosse",
+            "createdDate": "",
+            "modifiedDate": "",
+            "difficultyLevel": "Easy",
+            "category": "Sports"
+        },
+        {
+            "id": "3",
+            "question": "Who is known as the 'Lightning Bolt' in athletics?",
+            "answer": "Usain Bolt",
+            "createdDate": " ",
+            "modifiedDate": " ",
+            "difficultyLevel": "Easy",
+            "category": "Sports"
+        }
+    ]
+}
