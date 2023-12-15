@@ -1,24 +1,33 @@
 import { useEffect, useState } from 'react'
-import './App.css'
-import { fetchJsonData } from './services/getAPI'
-
+import "./App.css"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+  Link
+} from "react-router-dom";
+import Home from './components/Home';
+import FlashCards from './components/FlashCards';
 
 function App() {
-  const [flashCards, setFlashCards] = useState([])
-
-  
-  useEffect(() => {
-    fetchJsonData('https://dummyjson.com/products').then((result) => {
-      setFlashCards(result)
-    })
-  }, [])
-
-
 
   return (
-    <div>
-      Salam
-    </div>
+    <Router>
+      <div className='navbar'>
+        <NavLink exact to="/" className="navbarItem" activeClassName='activeNavbarItem'>Home</NavLink>
+        <NavLink exact to="/cards" className="navbarItem" activeClassName='activeNavbarItem'>Flash Cards</NavLink>
+      </div>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/cards">
+          <FlashCards />
+        </Route>
+      </Switch>
+    </Router>
+
   )
 }
 

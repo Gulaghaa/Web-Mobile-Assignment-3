@@ -1,5 +1,49 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Scribble&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("./assets/background.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.navbar {
+  height: 70px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  border: 1px solid rgb(92, 192, 246);;
+  padding-left: 5%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  backdrop-filter: blur(6px);
+  position: sticky;
+  z-index: 2;
+  top: 0px;
+}
+
+.navbarItem{
+    border: 1px solid transparent;
+    font-family: 'Rubik Scribble', "sans-serif";
+    font-size: 25px;
+    color:  rgb(92, 192, 246);
+    text-decoration: none;
+    padding: 4px;
+    display: grid;
+    place-content: center;
+}
+
+.activeNavbarItem{
+    border: 1px solid rgb(92, 192, 246);
 }
