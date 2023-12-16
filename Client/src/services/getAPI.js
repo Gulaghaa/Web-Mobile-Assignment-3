@@ -10,3 +10,17 @@ export const fetchJsonData = async (path) => {
     }
 
 };
+
+export const postJsonData = async (url, data) => {
+    try {
+        const response = await axios.post(url, data, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        return Promise.reject(handleFetchError(error));
+    }
+};
