@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { fetchJsonData , postJsonData } from "../services/getAPI";
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import uniqid from 'uniqid';
 
 const customStyles = {
     overlay: {
@@ -33,7 +32,7 @@ export default function FlashCards() {
         id: '' ,
         question: '',
         answer: '',
-        createdDate: '',
+        createdDate:new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
         modifiedDate: '',
         difficultyLevel: '',
         category: ''
@@ -44,11 +43,18 @@ export default function FlashCards() {
 
     const handleCreateCard = async () => {
         try {
-            setNewCard({...newCard, createdDate: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()})
+            // Update the state with the new createdDate and immediately use the updated state
+            await setNewCard(prevState => ({
+                ...prevState,
+                createdDate: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
+            }));
+    
+            // Use the current state (newCard) when making the API call
             const response = await postJsonData('http://localhost:3001/flashCards', newCard);
+    
             if (response) {
                 console.log('Flash card created successfully!');
-                setCreateCard(false); 
+                setCreateCard(false);
             } else {
                 console.error('Failed to create flash card.');
             }
@@ -56,6 +62,8 @@ export default function FlashCards() {
             console.error('Error:', error);
         }
     };
+    
+
 
     function openModal() {
         setCreateCard(true);
@@ -72,7 +80,7 @@ export default function FlashCards() {
                 setPending(false)
                 setNewCard({...newCard,id:(response.length + 1).toString()})
             })
-    }, [])
+    }, [newCard.createdDate])
 
     console.log(flashCards)
 
