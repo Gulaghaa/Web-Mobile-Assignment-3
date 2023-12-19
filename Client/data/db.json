@@ -29,54 +29,36 @@
     },
     {
       "id": "4",
-      "question": "What do we say when someone helps you",
+      "question": "What do we say when someone helps you?",
       "answer": "thank you",
-      "createdDate": "22:44",
+      "createdDate": "1:45",
       "modifiedDate": "",
       "difficultyLevel": "easy",
       "category": "General Knowledge"
     },
     {
       "id": "5",
-      "question": "What do we say when someone helps you",
-      "answer": "as",
-      "createdDate": "12/18/2023, 10:58:15 PM",
+      "question": "what do you need?",
+      "answer": "nothing",
+      "createdDate": "1:48",
       "modifiedDate": "",
-      "difficultyLevel": "easy",
-      "category": "General Knowledge"
+      "category": "Literature",
+      "difficultyLevel": "hard"
     },
     {
       "id": "6",
-      "question": "What do we say wshen someone helps you",
-      "answer": "as",
-      "createdDate": "12/18/2023, 10:59:07 PM",
+      "question": "what do you need for assignment?",
+      "answer": "asdasd",
+      "createdDate": "1:49",
       "modifiedDate": "",
-      "difficultyLevel": "easy",
-      "category": "General Knowledge"
+      "category": "General Knowledge",
+      "difficultyLevel": "easy"
     },
     {
       "id": "7",
-      "question": "wewe",
-      "answer": "sdsdasdf",
-      "createdDate": "23:9",
-      "modifiedDate": "",
-      "difficultyLevel": "easy",
-      "category": "General Knowledge"
-    },
-    {
-      "id": "8",
-      "question": "asd",
-      "answer": "asdasd",
-      "createdDate": "",
-      "modifiedDate": "",
-      "difficultyLevel": "hard",
-      "category": "Geography"
-    },
-    {
-      "id": "9",
-      "question": "asfsf",
-      "answer": "thank you",
-      "createdDate": "23:13",
+      "question": "what do you need for assignmen",
+      "answer": "Nothing",
+      "createdDate": "8:49",
       "modifiedDate": "",
       "difficultyLevel": "easy",
       "category": "General Knowledge"

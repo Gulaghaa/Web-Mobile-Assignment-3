@@ -16,8 +16,9 @@ const customStyles = {
         left: '25%',
         right: '25%',
         top: '10%',
-        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))',
-        backdropFilter: 'blur(50px)',
+        // background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))',
+        // backdropFilter: 'blur(50px)',
+        backgroundColor:'rgb(14,37,54)',
         border: '2px solid rgb(92, 192, 246)',
     },
 };
@@ -26,6 +27,7 @@ Modal.setAppElement('#root');
 
 export default function FlashCards() {
     const [flashCards, setFlashCards] = useState([]);
+    const [status, setStatus] = useState([false])
     const [createCard, setCreateCard] = useState(false);
     const [newCard, setNewCard] = useState({
         id: '',
@@ -44,7 +46,7 @@ export default function FlashCards() {
                 setFlashCards(response);
                 setNewCard({ ...newCard, id: (response.length + 1).toString() });
             });
-    }, []);
+    }, [status]);
 
     const handleInputChange = (e) => {
         const updatedCard = { ...newCard, [e.target.name]: e.target.value };
@@ -82,7 +84,7 @@ export default function FlashCards() {
                     category: 'General Knowledge',
                     difficultyLevel: 'easy',
                 });
-                setFlashCards([...flashCards, newCard]);
+                setStatus((prev)=>!prev)
                 setCreateCard(false);
             } else {
                 console.error('Failed to create flash card.');
