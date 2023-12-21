@@ -37,7 +37,10 @@ export default function CreateCard() {
         difficultyLevel: 'easy',
         category: 'General Knowledge',
     });
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        question: 'Question is required',
+        answer:'Answer is required'
+    });
 
     useEffect(() => {
         fetchJsonData('http://localhost:3001/flashCards')
