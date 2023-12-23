@@ -1,9 +1,10 @@
-import React from 'react'
 import CreateCard from './CreateCard'
+import React from 'react'
 
 
-export default function 
-() {
+export default function FlashCards() {
+  
+
   return (
     <div>
         <CreateCard />
