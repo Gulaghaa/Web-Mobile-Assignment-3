@@ -1,9 +1,8 @@
-import { fetchJsonData, postJsonData } from '../services/getAPI';
 import React, { useEffect, useState } from 'react';
 import { MdAddCircleOutline } from 'react-icons/md';
-
 import Modal from 'react-modal';
-import '../style/CreateCard.css'
+import { fetchJsonData, postJsonData } from '../services/getAPI';
+import '../style/CreateCard.css';
 
 const customStyles = {
     overlay: {
@@ -26,12 +25,13 @@ Modal.setAppElement('#root');
 
 export default function CreateCard() {
     const [flashCards, setFlashCards] = useState([]);
-    const [status, setStatus] = useState([false])
+    const [status, setStatus] = useState([false]);
     const [createCard, setCreateCard] = useState(false);
     const [newCard, setNewCard] = useState({
         id: '',
         question: '',
         answer: '',
+        image: '', // New field for the image
         createdDate: '',
         modifiedDate: '',
         difficultyLevel: 'easy',
@@ -39,14 +39,14 @@ export default function CreateCard() {
     });
     const [errors, setErrors] = useState({
         question: 'Question is required',
-        answer:'Answer is required'
+        answer: 'Answer is required'
     });
 
     useEffect(() => {
         fetchJsonData('http://localhost:3001/flashCards')
             .then(response => {
                 setFlashCards(response);
-                setNewCard({ ...newCard, id: (response.length + 1).toString() });
+                setNewCard({ ...newCard, id: (Number(response[response.length - 1]?.id || 0) + 1).toString() });
             });
     }, [status]);
 
@@ -66,8 +66,18 @@ export default function CreateCard() {
         setErrors(newErrors);
     };
 
-    console.log(errors)
-    console.log(newCard)
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file && /^image\/(jpeg|jpg|png)$/.test(file.type)) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                setNewCard({ ...newCard, image: reader.result });
+            };
+        } else {
+            alert('Please select a valid image file (JPEG, JPG, PNG)');
+        }
+    };
 
     const handleCreateCard = async () => {
         if (Object.keys(errors).length > 0) return;
@@ -79,22 +89,22 @@ export default function CreateCard() {
             createdDate: currentTime
         };
 
-
-
         try {
             const response = await postJsonData('http://localhost:3001/flashCards', cardToCreate);
             if (response) {
                 setNewCard({
-                    id: (flashCards.length + 1).toString(),
+                    id: (Number(flashCards[flashCards.length - 1]?.id || 0) + 1).toString(),
                     question: '',
                     answer: '',
+                    image: '',
                     createdDate: ' ',
                     modifiedDate: '',
                     category: 'General Knowledge',
                     difficultyLevel: 'easy',
                 });
-                setStatus((prev) => !prev)
+                setStatus((prev) => !prev);
                 setCreateCard(false);
+                setErrors({ question: 'Question is required', answer: 'Answer is required' });
             } else {
                 console.error('Failed to create flash card.');
             }
@@ -103,13 +113,8 @@ export default function CreateCard() {
         }
     };
 
-    function openModal() {
-        setCreateCard(true);
-    }
-
-    function closeModal() {
-        setCreateCard(false);
-    }
+    const openModal = () => setCreateCard(true);
+    const closeModal = () => setCreateCard(false);
 
     return (
         <div>
@@ -118,19 +123,22 @@ export default function CreateCard() {
                 <span>Create Card</span>
             </button>
 
-
             <Modal isOpen={createCard} onRequestClose={closeModal} style={customStyles}>
                 <span className='spanOutsideofForm'>Create A New Flash Card</span>
-                <form action='' method='post' className='modalForm'>
+                <form className='modalForm'>
                     <div>
-                        <span>Please, enter an question for card: </span>
+                        <span>Please, enter a question for the card: </span>
                         <input type='text' value={newCard.question} name='question' placeholder='Enter a valid question' onChange={handleInputChange} />
                         {errors.question ? <div className='error'>*{' ' + errors.question}</div> : <div style={{ height: '14px' }}></div>}
                     </div>
                     <div>
-                        <span>Please, enter relative answer to you question: </span>
+                        <span>Please, enter a relative answer to your question: </span>
                         <input type='text' value={newCard.answer} name='answer' placeholder='Enter an answer' onChange={handleInputChange} />
                         {errors.answer ? <div className='error'>*{' ' + errors.answer}</div> : <div style={{ height: '14px' }}></div>}
+                    </div>
+                    <div>
+                        <span>Upload an Image for the Card:</span>
+                        <input type='file' accept="image/jpeg, image/jpg, image/png" onChange={handleImageChange} />
                     </div>
                     <div>
                         <span>Please, select difficulty level of your question (easy as default)</span>
@@ -140,9 +148,8 @@ export default function CreateCard() {
                             <option value='hard'>Hard</option>
                         </select>
                     </div>
-
                     <div>
-                        <span>Please, category of your question (General Knowledge as default)</span>
+                        <span>Please, select the category of your question (General Knowledge as default)</span>
                         <select name='category' onChange={handleInputChange} value={newCard.category}>
                             <option value='General Knowledge'>General Knowledge</option>
                             <option value='Mathematics'>Mathematics</option>
