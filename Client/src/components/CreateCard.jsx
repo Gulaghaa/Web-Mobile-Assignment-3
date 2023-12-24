@@ -23,7 +23,7 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export default function CreateCard() {
+export default function CreateCard({setData}) {
     const [flashCards, setFlashCards] = useState([]);
     const [status, setStatus] = useState([false]);
     const [createCard, setCreateCard] = useState(false);
@@ -31,7 +31,7 @@ export default function CreateCard() {
         id: '',
         question: '',
         answer: '',
-        image: '', // New field for the image
+        image: '', 
         createdDate: '',
         modifiedDate: '',
         difficultyLevel: 'easy',
@@ -46,6 +46,7 @@ export default function CreateCard() {
         fetchJsonData('http://localhost:3001/flashCards')
             .then(response => {
                 setFlashCards(response);
+                setData(response)
                 setNewCard({ ...newCard, id: (Number(response[response.length - 1]?.id || 0) + 1).toString() });
             });
     }, [status]);
