@@ -1,7 +1,7 @@
 .cardContainer {
     perspective: 1000px; 
-    height: 200px; 
-    width: 300px;
+    height: 500px; 
+    width: 80%;
     margin: 20px auto; 
     cursor: pointer; 
   }
@@ -30,23 +30,37 @@
   }
   
   .cardFront {
-    background-image: url('path-to-your-image.png'); 
+    background-color: red;
     background-size: cover;
     background-position: center;
   }
   
   .cardBack {
     background-color: #1e90ff; 
-    transform: rotateY(180deg); 
+    transform: rotateX(180deg); 
   }
   
   .is-flipped {
-    transform: rotateY(180deg);
+    transform: rotateX(180deg);
   }
   
  
   .cardContainer > div {
     padding: 10px;
     border: 1px solid #ccc; 
+  }
+  
+  .deleteButton {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 10px;
+    align-self: flex-end;
+  }
+  
+  .trashIcon {
+    width: 24px;
+    height: 24px;
   }
   

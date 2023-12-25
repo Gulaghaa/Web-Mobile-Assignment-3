@@ -24,3 +24,12 @@ export const postJsonData = async (url, data) => {
         return Promise.reject(handleFetchError(error));
     }
 };
+
+
+export const deleteJsonData = async (url) => {
+    try {
+        await axios.delete(url);
+    } catch (error) {
+        return Promise.reject(handleFetchError(error));
+    }
+};
