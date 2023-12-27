@@ -33,3 +33,8 @@ export const deleteJsonData = async (url) => {
         return Promise.reject(handleFetchError(error));
     }
 };
+
+export async function updateJsonData(url, data) {
+    const response = await axios.put(url, data);
+    return response.data;
+}

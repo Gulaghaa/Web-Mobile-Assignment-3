@@ -4,11 +4,13 @@ import CardItem from './CardItem';
 
 export default function FlashCards() {
   const [data, setData] = useState([]);
+  const [status, setStatus] = useState([false]);
+
 
   
   return (
     <div>
-      <CreateCard setData={setData} />
+      <CreateCard setData={setData} setStatus={setStatus} status={status} />
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         {data && data.map((event) => (
           <CardItem 
@@ -19,6 +21,7 @@ export default function FlashCards() {
             key={event.id} 
             id={event.id}
             setData={setData}
+            setStatus={setStatus}
           />
         ))}
       </div>

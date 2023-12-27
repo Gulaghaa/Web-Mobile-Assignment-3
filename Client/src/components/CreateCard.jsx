@@ -23,9 +23,8 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export default function CreateCard({setData}) {
+export default function CreateCard({status, setStatus, setData}) {
     const [flashCards, setFlashCards] = useState([]);
-    const [status, setStatus] = useState([false]);
     const [createCard, setCreateCard] = useState(false);
     const [newCard, setNewCard] = useState({
         id: '',
@@ -37,6 +36,7 @@ export default function CreateCard({setData}) {
         difficultyLevel: 'easy',
         category: 'General Knowledge',
     });
+    
     const [errors, setErrors] = useState({
         question: 'Question is required',
         answer: 'Answer is required'
@@ -50,6 +50,8 @@ export default function CreateCard({setData}) {
                 setNewCard({ ...newCard, id: (Number(response[response.length - 1]?.id || 0) + 1).toString() });
             });
     }, [status]);
+
+    console.log(flashCards)
 
     const handleInputChange = (e) => {
         const updatedCard = { ...newCard, [e.target.name]: e.target.value };
