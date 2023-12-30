@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { deleteJsonData, updateJsonData } from '../services/getAPI'; 
-import EditCard from './EditCard'; 
+import { deleteJsonData } from '../services/getAPI';
+import EditCard from './EditCard';
 import '../style/CardItem.css';
 
 function CardItem({ question, answer, createdDate, category, id, setData, setStatus }) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false); 
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
 
   const handleClick = () => {
     setIsFlipped(!isFlipped);
@@ -16,7 +16,7 @@ function CardItem({ question, answer, createdDate, category, id, setData, setSta
     try {
       await deleteJsonData(`http://localhost:3001/flashCards/${id}`);
       setData(currentData => currentData.filter(item => item.id !== id));
-      setStatus((prev) => !prev)
+      setStatus((prev) => !prev);
     } catch (error) {
       console.error('Error while deleting:', error);
     }
@@ -24,6 +24,9 @@ function CardItem({ question, answer, createdDate, category, id, setData, setSta
 
   const toggleEditPopup = () => {
     setIsEditPopupOpen(!isEditPopupOpen);
+    if (!isEditPopupOpen) {
+      setIsFlipped(false);
+    }
   };
 
   return (
@@ -37,14 +40,19 @@ function CardItem({ question, answer, createdDate, category, id, setData, setSta
             e.stopPropagation(); 
             toggleEditPopup();
           }} className="editButton">Edit</button>
-
         </div>
         <div className='cardBack cardVisual'>
           <div>{answer}</div>
           <button onClick={handleDelete} className="deleteButton">Delete</button>
         </div>
       </div>
-      {isEditPopupOpen && <EditCard id={id} initialQuestion={question} initialAnswer={answer} setData={setData} closePopup={toggleEditPopup} />}
+      {isEditPopupOpen && <EditCard 
+        id={id} 
+        initialQuestion={question} 
+        initialAnswer={answer} 
+        setData={setData} 
+        closePopup={toggleEditPopup}
+        setIsFlipped={setIsFlipped} />}
     </div>
   );
 }

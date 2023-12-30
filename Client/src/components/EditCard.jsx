@@ -2,45 +2,64 @@ import React, { useState, useEffect } from 'react';
 import { updateJsonData, fetchJsonData } from '../services/getAPI';
 import '../style/EditCard.css';
 
-function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup }) {
+function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup, setIsFlipped }) {
     const [question, setQuestion] = useState(initialQuestion);
     const [answer, setAnswer] = useState(initialAnswer);
-    const [isUpdated, setIsUpdated] = useState(false);
-    const [isQuestionUnique, setIsQuestionUnique] = useState(true);
-    const [canUpdate, setCanUpdate] = useState(false);
+    const [errors, setErrors] = useState({});
 
-
-
-
-    useEffect(() => {
-        const checkUniqueness = async () => {
-            const data = await fetchJsonData('http://localhost:3001/flashCards');
-            const isUnique = !data.some(card => card.question === question && card.id !== id);
-            setIsQuestionUnique(isUnique);
-        };
-
-        if (question !== initialQuestion || answer !== initialAnswer) {
-            setIsUpdated(true);
-            checkUniqueness();
+    // Function to handle changes in the input fields
+    const handleInputChange = (e, type) => {
+        const value = e.target.value;
+        if (type === 'question') {
+            setQuestion(value);
         } else {
-            setIsUpdated(false);
+            setAnswer(value);
         }
-    }, [question, answer, initialQuestion, initialAnswer, id]);
-
-    useEffect(() => {
-        setCanUpdate(isUpdated && isQuestionUnique && question.trim() !== '' && answer.trim() !== '');
-    }, [isUpdated, isQuestionUnique, question, answer]);
-
-
-    const stopPropagation = (e) => {
-        e.stopPropagation();
     };
 
+    // Function to handle focus on the input fields
+    const handleFocusChange = (type) => {
+        if (type === 'question') {
+            setIsFlipped(false); // Show the question side of the card
+        } else {
+            setIsFlipped(true); // Show the answer side of the card
+        }
+    };
 
+    // Function to validate the inputs
+    const validateInputs = async () => {
+        let newErrors = {};
+        const data = await fetchJsonData('http://localhost:3001/flashCards');
+        const hasChanges = question !== initialQuestion || answer !== initialAnswer;
+
+        if (!question.trim()) {
+            newErrors.question = 'Question is required';
+        } else if (data.some(card => card.question === question && card.id !== id)) {
+            newErrors.question = 'This question already exists';
+        }
+
+        if (!answer.trim()) {
+            newErrors.answer = 'Answer is required';
+        }
+
+        if (!hasChanges) {
+            newErrors.noChanges = 'No changes made';
+        }
+
+        setErrors(newErrors);
+    };
+
+    // Effect to validate inputs when they change
+    useEffect(() => {
+        validateInputs();
+    }, [question, answer, id]);
+
+    // Function to handle updating the card
     const handleUpdate = async () => {
+        if (Object.keys(errors).length > 0) return;
+
         try {
             const currentItemData = await fetchJsonData(`http://localhost:3001/flashCards/${id}`);
-
             const currentDate = new Date();
             const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
             const updatePayload = {
@@ -48,10 +67,8 @@ function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup }) {
                 question,
                 answer,
                 modifiedDate: currentTime
-            }
-
+            };
             const updatedData = await updateJsonData(`http://localhost:3001/flashCards/${id}`, updatePayload);
-
             setData(currentData => currentData.map(item => item.id === id ? updatedData : item));
             closePopup();
         } catch (error) {
@@ -60,14 +77,16 @@ function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup }) {
     };
 
     return (
-        <div className="editCardModal" onClick={stopPropagation}>
+        <div className="editCardModal" onClick={(e) => e.stopPropagation()}>
             <div className="editCardModalContent">
                 <h3>Edit Card</h3>
-                <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} />
-                <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} />
-                <button onClick={handleUpdate} disabled={!canUpdate}>Update</button>
+                <input type="text" value={question} onChange={(e) => handleInputChange(e, 'question')} onFocus={() => handleFocusChange('question')} />
+                {errors.question && <p className="error">{errors.question}</p>}
+                <input type="text" value={answer} onChange={(e) => handleInputChange(e, 'answer')} onFocus={() => handleFocusChange('answer')} />
+                {errors.answer && <p className="error">{errors.answer}</p>}
+                {errors.noChanges && <p className="error">{errors.noChanges}</p>}
+                <button onClick={handleUpdate} disabled={Object.keys(errors).length > 0}>Update</button>
                 <button onClick={closePopup}>Close</button>
-                {!isQuestionUnique && <p>This question already exists.</p>}
             </div>
         </div>
     );
