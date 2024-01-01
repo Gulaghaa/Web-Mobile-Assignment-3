@@ -3,7 +3,7 @@ import { deleteJsonData } from '../services/getAPI';
 import EditCard from './EditCard';
 import '../style/CardItem.css';
 
-function CardItem({ question, answer, createdDate, category, id, setData, setStatus }) {
+function CardItem({ question, answer, imageForQuestion, imageForAnswer, createdDate, category, id, setData, setStatus, status, difficultyLevel }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
 
@@ -33,17 +33,30 @@ function CardItem({ question, answer, createdDate, category, id, setData, setSta
     <div className='cardContainer' onClick={handleClick}>
       <div className={`cardInner ${isFlipped ? 'is-flipped' : ''}`}>
         <div className='cardFront cardVisual'>
+          {imageForQuestion && <img src={imageForQuestion} style={{width:"100px", height:"100px"}} alt="Question" className="cardImage" />}
           <div>{question}</div>
           <div>{createdDate}</div>
           <div>{category}</div>
-          <button onClick={(e) => {
-            e.stopPropagation(); 
-            toggleEditPopup();
-          }} className="editButton">Edit</button>
+          <div>{status}</div>
+          <div>{difficultyLevel}</div>
+          <div className="buttonContainer">
+            <button onClick={(e) => {
+              e.stopPropagation(); 
+              toggleEditPopup();
+            }} className="editButton">Edit</button>
+            <button onClick={handleDelete} className="deleteButton">Delete</button>
+          </div>
         </div>
         <div className='cardBack cardVisual'>
+          {imageForAnswer && <img src={imageForAnswer} style={{width:"100px", height:"100px"}} alt="Answer" className="cardImage" />}
           <div>{answer}</div>
-          <button onClick={handleDelete} className="deleteButton">Delete</button>
+          <div className="buttonContainer">
+            <button onClick={(e) => {
+              e.stopPropagation(); 
+              toggleEditPopup();
+            }} className="editButton">Edit</button>
+            <button onClick={handleDelete} className="deleteButton">Delete</button>
+          </div>
         </div>
       </div>
       {isEditPopupOpen && <EditCard 

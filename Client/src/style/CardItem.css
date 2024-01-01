@@ -14,6 +14,16 @@
     transition: transform 0.6s;
     transform-style: preserve-3d;
   }
+
+  .cardContainer .buttonContainer {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .cardContainer:hover .buttonContainer {
+    opacity: 1;
+  }
+  
   
   .cardFront, .cardBack {
     position: absolute;

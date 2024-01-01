@@ -30,28 +30,29 @@ export default function CreateCard({status, setStatus, setData}) {
         id: '',
         question: '',
         answer: '',
-        image: '', 
+        imageForQuestion: '', 
+        imageForAnswer: '', 
         createdDate: '',
         modifiedDate: '',
         difficultyLevel: 'easy',
         category: 'General Knowledge',
+        status: '',
     });
     
     const [errors, setErrors] = useState({
         question: 'Question is required',
-        answer: 'Answer is required'
+        answer: 'Answer is required',
+        status: 'Status is required'
     });
 
     useEffect(() => {
         fetchJsonData('http://localhost:3001/flashCards')
             .then(response => {
                 setFlashCards(response);
-                setData(response)
+                setData(response);
                 setNewCard({ ...newCard, id: (Number(response[response.length - 1]?.id || 0) + 1).toString() });
             });
     }, [status]);
-
-    console.log(flashCards)
 
     const handleInputChange = (e) => {
         const updatedCard = { ...newCard, [e.target.name]: e.target.value };
@@ -66,16 +67,27 @@ export default function CreateCard({status, setStatus, setData}) {
         if (updatedCard.answer === '') {
             newErrors.answer = 'Answer is required';
         }
+        if (updatedCard.status === '') {
+            newErrors.status = 'Status is required';
+        }
         setErrors(newErrors);
     };
 
-    const handleImageChange = (e) => {
+    const handleImageChangeForQuestion = (e) => {
+        handleImageChange(e, 'imageForQuestion');
+    };
+
+    const handleImageChangeForAnswer = (e) => {
+        handleImageChange(e, 'imageForAnswer');
+    };
+
+    const handleImageChange = (e, key) => {
         const file = e.target.files[0];
         if (file && /^image\/(jpeg|jpg|png)$/.test(file.type)) {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = () => {
-                setNewCard({ ...newCard, image: reader.result });
+                setNewCard({ ...newCard, [key]: reader.result });
             };
         } else {
             alert('Please select a valid image file (JPEG, JPG, PNG)');
@@ -99,15 +111,17 @@ export default function CreateCard({status, setStatus, setData}) {
                     id: (Number(flashCards[flashCards.length - 1]?.id || 0) + 1).toString(),
                     question: '',
                     answer: '',
-                    image: '',
-                    createdDate: ' ',
+                    imageForQuestion: '',
+                    imageForAnswer: '',
+                    createdDate: '',
                     modifiedDate: '',
                     category: 'General Knowledge',
                     difficultyLevel: 'easy',
+                    status: '',
                 });
                 setStatus((prev) => !prev);
                 setCreateCard(false);
-                setErrors({ question: 'Question is required', answer: 'Answer is required' });
+                setErrors({ question: 'Question is required', answer: 'Answer is required', status: 'Status is required' });
             } else {
                 console.error('Failed to create flash card.');
             }
@@ -135,13 +149,17 @@ export default function CreateCard({status, setStatus, setData}) {
                         {errors.question ? <div className='error'>*{' ' + errors.question}</div> : <div style={{ height: '14px' }}></div>}
                     </div>
                     <div>
+                        <span>Upload an Image for the Question:</span>
+                        <input type='file' accept="image/jpeg, image/jpg, image/png" onChange={handleImageChangeForQuestion} />
+                    </div>
+                    <div>
                         <span>Please, enter a relative answer to your question: </span>
                         <input type='text' value={newCard.answer} name='answer' placeholder='Enter an answer' onChange={handleInputChange} />
                         {errors.answer ? <div className='error'>*{' ' + errors.answer}</div> : <div style={{ height: '14px' }}></div>}
                     </div>
                     <div>
-                        <span>Upload an Image for the Card:</span>
-                        <input type='file' accept="image/jpeg, image/jpg, image/png" onChange={handleImageChange} />
+                        <span>Upload an Image for the Answer:</span>
+                        <input type='file' accept="image/jpeg, image/jpg, image/png" onChange={handleImageChangeForAnswer} />
                     </div>
                     <div>
                         <span>Please, select difficulty level of your question (easy as default)</span>
@@ -169,7 +187,17 @@ export default function CreateCard({status, setStatus, setData}) {
                             <option value='Art'>Art</option>
                         </select>
                     </div>
-                    <button type='button' className='createCartButton' onClick={handleCreateCard} disabled={errors.question || errors.answer}>Create Flash Card</button>
+                    <div>
+                        <span>Please, select the status of your card</span>
+                        <select name='status' onChange={handleInputChange} value={newCard.status}>
+                            <option value=''>Select Status</option>
+                            <option value='Learned'>Learned</option>
+                            <option value='Want to Learn'>Want to Learn</option>
+                            <option value='Noted'>Noted</option>
+                        </select>
+                        {errors.status && <div className='error'>* {errors.status}</div>}
+                    </div>
+                    <button type='button' className='createCardButton' onClick={handleCreateCard} disabled={Object.keys(errors).length > 0}>Create Flash Card</button>
                 </form>
             </Modal>
         </div>

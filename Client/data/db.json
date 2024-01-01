@@ -1,24 +1,124 @@
 {
   "flashCards": [
     {
-      "id": "4",
-      "question": "What do we say someone helps you",
-      "answer": "asdax",
-      "image": "",
-      "createdDate": "0:0",
-      "modifiedDate": "2:1",
+      "id": "1",
+      "question": "What do we say when someone helps you?",
+      "answer": "Thank you",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "3:53",
+      "modifiedDate": "",
       "difficultyLevel": "easy",
-      "category": "General Knowledge"
+      "category": "General Knowledge",
+      "status": "Want to Learn"
+    },
+    {
+      "id": "2",
+      "question": "What is the capital of France?",
+      "answer": "Paris",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "4:10",
+      "modifiedDate": "",
+      "difficultyLevel": "medium",
+      "category": "Geography",
+      "status": "Learned"
+    },
+    {
+      "id": "3",
+      "question": "Who wrote 'Romeo and Juliet'?",
+      "answer": "William Shakespeare",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "4:30",
+      "modifiedDate": "",
+      "difficultyLevel": "medium",
+      "category": "Literature",
+      "status": "Noted"
+    },
+    {
+      "id": "4",
+      "question": "What is the largest planet in our solar system?",
+      "answer": "Jupiter",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "5:00",
+      "modifiedDate": "",
+      "difficultyLevel": "easy",
+      "category": "Astronomy",
+      "status": "Want to Learn"
     },
     {
       "id": "5",
-      "question": "What do we say when someone helps you?",
-      "answer": "thank you",
-      "image": "",
-      "createdDate": "0:1",
+      "question": "What is the chemical symbol for water?",
+      "answer": "H2O",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "5:20",
       "modifiedDate": "",
-      "category": "General Knowledge",
-      "difficultyLevel": "easy"
+      "difficultyLevel": "easy",
+      "category": "Science",
+      "status": "Learned"
+    },
+    {
+      "id": "6",
+      "question": "What is the square root of 64?",
+      "answer": "8",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "6:00",
+      "modifiedDate": "",
+      "difficultyLevel": "medium",
+      "category": "Mathematics",
+      "status": "Noted"
+    },
+    {
+      "id": "7",
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "6:45",
+      "modifiedDate": "",
+      "difficultyLevel": "medium",
+      "category": "Art",
+      "status": "Want to Learn"
+    },
+    {
+      "id": "8",
+      "question": "In which continent is the Amazon Rainforest located?",
+      "answer": "South America",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "7:10",
+      "modifiedDate": "",
+      "difficultyLevel": "easy",
+      "category": "Geography",
+      "status": "Learned"
+    },
+    {
+      "id": "9",
+      "question": "What gas do plants absorb from the air for photosynthesis?",
+      "answer": "Carbon dioxide",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "7:30",
+      "modifiedDate": "",
+      "difficultyLevel": "easy",
+      "category": "Biology",
+      "status": "Noted"
+    },
+    {
+      "id": "10",
+      "question": "What is the currency of Japan?",
+      "answer": "Yen",
+      "imageForQuestion": "",
+      "imageForAnswer": "",
+      "createdDate": "8:00",
+      "modifiedDate": "",
+      "difficultyLevel": "easy",
+      "category": "Economics",
+      "status": "Want to Learn"
     }
   ]
 }

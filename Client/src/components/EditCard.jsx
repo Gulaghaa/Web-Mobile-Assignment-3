@@ -7,7 +7,6 @@ function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup, set
     const [answer, setAnswer] = useState(initialAnswer);
     const [errors, setErrors] = useState({});
 
-    // Function to handle changes in the input fields
     const handleInputChange = (e, type) => {
         const value = e.target.value;
         if (type === 'question') {
@@ -17,16 +16,14 @@ function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup, set
         }
     };
 
-    // Function to handle focus on the input fields
     const handleFocusChange = (type) => {
         if (type === 'question') {
-            setIsFlipped(false); // Show the question side of the card
+            setIsFlipped(false); 
         } else {
-            setIsFlipped(true); // Show the answer side of the card
+            setIsFlipped(true); 
         }
     };
 
-    // Function to validate the inputs
     const validateInputs = async () => {
         let newErrors = {};
         const data = await fetchJsonData('http://localhost:3001/flashCards');
@@ -49,12 +46,10 @@ function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup, set
         setErrors(newErrors);
     };
 
-    // Effect to validate inputs when they change
     useEffect(() => {
         validateInputs();
     }, [question, answer, id]);
 
-    // Function to handle updating the card
     const handleUpdate = async () => {
         if (Object.keys(errors).length > 0) return;
 
