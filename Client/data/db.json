@@ -1,30 +1,6 @@
 {
   "flashCards": [
     {
-      "id": "1",
-      "question": "What do we say when someone helps you?",
-      "answer": "Thank you",
-      "imageForQuestion": "",
-      "imageForAnswer": "",
-      "createdDate": "3:53",
-      "modifiedDate": "",
-      "difficultyLevel": "easy",
-      "category": "General Knowledge",
-      "status": "Want to Learn"
-    },
-    {
-      "id": "2",
-      "question": "What is the capital of France?",
-      "answer": "Paris",
-      "imageForQuestion": "",
-      "imageForAnswer": "",
-      "createdDate": "4:10",
-      "modifiedDate": "",
-      "difficultyLevel": "medium",
-      "category": "Geography",
-      "status": "Learned"
-    },
-    {
       "id": "3",
       "question": "Who wrote 'Romeo and Juliet'?",
       "answer": "William Shakespeare",
@@ -107,18 +83,6 @@
       "difficultyLevel": "easy",
       "category": "Biology",
       "status": "Noted"
-    },
-    {
-      "id": "10",
-      "question": "What is the currency of Japan?",
-      "answer": "Yen",
-      "imageForQuestion": "",
-      "imageForAnswer": "",
-      "createdDate": "8:00",
-      "modifiedDate": "",
-      "difficultyLevel": "easy",
-      "category": "Economics",
-      "status": "Want to Learn"
     }
   ]
 }

@@ -10,6 +10,33 @@ export default function FlashCards() {
   const [statusFilter, setStatusFilter] = useState('All');
   const [sortAttribute, setSortAttribute] = useState('id');
   const [sortOrder, setSortOrder] = useState('ascending');
+  const [selectedCards, setSelectedCards] = useState(new Set());
+
+
+
+  const handleCardSelect = (cardId) => {
+    setSelectedCards(prevSelected => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(cardId)) {
+        newSelected.delete(cardId);
+      } else {
+        newSelected.add(cardId);
+      }
+      return newSelected;
+    });
+  };
+
+  const handleShare = () => {
+    if (selectedCards.size === 0) {
+      return;
+    }
+    const selectedCardDetails = data
+      .filter(card => selectedCards.has(card.id))
+      .map(({ imageForQuestion, imageForAnswer, ...rest }) => rest);
+    const emailBody = encodeURIComponent(JSON.stringify(selectedCardDetails, null, 2));
+    window.open(`mailto:?subject=Shared Flash Cards&body=${emailBody}`);
+  };
+
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -29,7 +56,7 @@ export default function FlashCards() {
 
   const parseDate = (dateString) => {
     if (!dateString) {
-      return new Date(0); 
+      return new Date(0);
     }
     const [hours, minutes] = dateString.split(':').map(Number);
     return new Date().setHours(hours, minutes, 0, 0);
@@ -65,7 +92,8 @@ export default function FlashCards() {
 
   return (
     <div>
-      <div style={{display:"flex"}}>
+      <div style={{ display: "flex" }}>
+        <button onClick={handleShare} className="shareButton" disabled={selectedCards.size === 0}>Share Selected</button>
         <input
           type="text"
           placeholder="Search cards..."
@@ -107,6 +135,8 @@ export default function FlashCards() {
               imageForQuestion={event.imageForQuestion}
               imageForAnswer={event.imageForAnswer}
               status={event.status}
+              onSelect={() => handleCardSelect(event.id)}
+              isSelected={selectedCards.has(event.id)}
             />
           ))
         ) : (
