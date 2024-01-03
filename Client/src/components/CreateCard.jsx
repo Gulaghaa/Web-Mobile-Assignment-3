@@ -9,6 +9,7 @@ const customStyles = {
         backgroundColor: 'transparent',
         display: 'flex',
         justifyContent: 'center',
+        zIndex:'3'
     },
     content: {
         width: '600px',
@@ -23,22 +24,22 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export default function CreateCard({status, setStatus, setData}) {
+export default function CreateCard({ status, setStatus, setData }) {
     const [flashCards, setFlashCards] = useState([]);
     const [createCard, setCreateCard] = useState(false);
     const [newCard, setNewCard] = useState({
         id: '',
         question: '',
         answer: '',
-        imageForQuestion: '', 
-        imageForAnswer: '', 
+        imageForQuestion: '',
+        imageForAnswer: '',
         createdDate: '',
         modifiedDate: '',
         difficultyLevel: 'easy',
         category: 'General Knowledge',
         status: '',
     });
-    
+
     const [errors, setErrors] = useState({
         question: 'Question is required',
         answer: 'Answer is required',
@@ -61,7 +62,7 @@ export default function CreateCard({status, setStatus, setData}) {
         let newErrors = {};
         if (updatedCard.question === '') {
             newErrors.question = 'Question is required';
-        } else if (flashCards.some(card => card.question === updatedCard.question)) {
+        } else if (flashCards.some(card => card.question.trim() === updatedCard.question.trim())) {
             newErrors.question = 'This question already exists';
         }
         if (updatedCard.answer === '') {
@@ -141,6 +142,7 @@ export default function CreateCard({status, setStatus, setData}) {
             </button>
 
             <Modal isOpen={createCard} onRequestClose={closeModal} style={customStyles}>
+                <span onClick={closeModal} className='XButton'>x</span>
                 <span className='spanOutsideofForm'>Create A New Flash Card</span>
                 <form className='modalForm'>
                     <div>
@@ -149,13 +151,13 @@ export default function CreateCard({status, setStatus, setData}) {
                         {errors.question ? <div className='error'>*{' ' + errors.question}</div> : <div style={{ height: '14px' }}></div>}
                     </div>
                     <div>
-                        <span>Upload an Image for the Question:</span>
-                        <input type='file' accept="image/jpeg, image/jpg, image/png" onChange={handleImageChangeForQuestion} />
-                    </div>
-                    <div>
                         <span>Please, enter a relative answer to your question: </span>
                         <input type='text' value={newCard.answer} name='answer' placeholder='Enter an answer' onChange={handleInputChange} />
                         {errors.answer ? <div className='error'>*{' ' + errors.answer}</div> : <div style={{ height: '14px' }}></div>}
+                    </div>
+                    <div>
+                        <span>Upload an Image for the Question:</span>
+                        <input type='file' accept="image/jpeg, image/jpg, image/png" onChange={handleImageChangeForQuestion} />
                     </div>
                     <div>
                         <span>Upload an Image for the Answer:</span>

@@ -1,37 +1,158 @@
+.FlashCardUpper {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  backdrop-filter: blur(6px);
+  position: sticky;
+  z-index: 2;
+  top: 70px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  border: 1px solid rgb(92, 192, 246);
+  padding-bottom: 20px;
+}
+
+.FlashCardUpper > div {
+  display: flex;
+}
+
+.disabledShareButton{
+  height: 50px;
+  padding: 5px;
+  background-color: rgb(14,37,54);
+    color: white; 
+    padding: 10px 20px; 
+    border: 1px solid rgb(92, 192, 246); 
+    border-radius: 5px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: rgb(64, 104, 135);
+  cursor: not-allowed;
+}
+
+
+
+.shareButton{
+  height: 50px;
+  padding: 5px;
+  background-color: rgb(14,37,54);
+    color: white; 
+    padding: 10px 20px; 
+    border: 1px solid rgb(92, 192, 246); 
+    border-radius: 5px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.FlashCardUpper > div:first-of-type {
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  margin-top: 10px;
+}
+
+.FlashCardUpper > div:nth-of-type(2){
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  margin-top: 10px;
+}
+
+.FlashCardUpper > div:nth-of-type(2) > div > span{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 20px;
+  color: white;
+}
+
+.FlashCardUpper > div:nth-of-type(2) > div{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+
 .searchInput {
-    width: 80%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.1);
-    transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: 'Josefin Sans', sans-serif;
+  width: 500px;
+  border: 3px solid rgb(92, 192, 246);
+  background-color: rgba(14, 37, 54, 0.8);
+  color: rgb(92, 192, 246);
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 20px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none; 
+}
+
+.searchInput:hover {
+  border-color: rgba(92, 192, 246, 0.8);
+}
+
+.searchInput:focus {
+  border-color: rgb(92, 192, 246);
+  box-shadow: 0 0 8px rgba(92, 192, 246, 0.6);
+}
+
+
+select {
+  width: 180px;
+  font-family: 'Josefin Sans', sans-serif;
+  border: 3px solid rgb(92, 192, 246);
+  background-color: rgba(14, 37, 54, 0.8);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  appearance: none; 
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white"><polygon points="12,15 16,10 8,10"/></svg>'); 
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  cursor: pointer;
+}
+
+select:hover {
+  border-color: rgba(92, 192, 246, 0.8);
+}
+
+ select:focus {
+  border-color: rgb(92, 192, 246);
+  box-shadow: 0 0 8px rgba(92, 192, 246, 0.6);
+}
+
+ select option {
+  background-color: rgb(14, 37, 54);
+  color: white;
+}
+
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
   }
-  
-  .searchInput:focus {
-    border-color: #007bff;
-    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.2);
-    outline: none;
-  }
-  
-  .cardsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .noCardsMessage {
-    text-align: center;
-    margin-top: 50px;
-    font-size: 1.2em;
-    color: #666;
-    opacity: 0;
-    animation: fadeIn 1s forwards;
-  }
-  
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
-  }
-  
+}
