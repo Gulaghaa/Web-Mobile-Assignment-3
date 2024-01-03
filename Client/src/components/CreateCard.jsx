@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MdAddCircleOutline } from 'react-icons/md';
+import { ImCancelCircle } from "react-icons/im";
 import Modal from 'react-modal';
 import { fetchJsonData, postJsonData } from '../services/getAPI';
 import '../style/CreateCard.css';
@@ -96,40 +97,43 @@ export default function CreateCard({ status, setStatus, setData }) {
     };
 
     const handleCreateCard = async () => {
-        if (Object.keys(errors).length > 0) return;
+    if (Object.keys(errors).length > 0) return;
 
-        const currentDate = new Date();
-        const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
-        const cardToCreate = {
-            ...newCard,
-            createdDate: currentTime
-        };
-
-        try {
-            const response = await postJsonData('http://localhost:3001/flashCards', cardToCreate);
-            if (response) {
-                setNewCard({
-                    id: (Number(flashCards[flashCards.length - 1]?.id || 0) + 1).toString(),
-                    question: '',
-                    answer: '',
-                    imageForQuestion: '',
-                    imageForAnswer: '',
-                    createdDate: '',
-                    modifiedDate: '',
-                    category: 'General Knowledge',
-                    difficultyLevel: 'easy',
-                    status: '',
-                });
-                setStatus((prev) => !prev);
-                setCreateCard(false);
-                setErrors({ question: 'Question is required', answer: 'Answer is required', status: 'Status is required' });
-            } else {
-                console.error('Failed to create flash card.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+    const currentDate = new Date();
+    const currentTime = `${currentDate.getHours()}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
+    const cardToCreate = {
+        ...newCard,
+        createdDate: currentTime,
+        order: flashCards.length 
     };
+
+    try {
+        const response = await postJsonData('http://localhost:3001/flashCards', cardToCreate);
+        if (response) {
+            setNewCard({
+                id: '',
+                question: '',
+                answer: '',
+                imageForQuestion: '',
+                imageForAnswer: '',
+                createdDate: '',
+                modifiedDate: '',
+                category: 'General Knowledge',
+                difficultyLevel: 'easy',
+                status: '',
+                order: 0 // Reset for the next new card
+            });
+            setStatus((prev) => !prev);
+            setCreateCard(false);
+            setErrors({ question: 'Question is required', answer: 'Answer is required', status: 'Status is required' });
+        } else {
+            console.error('Failed to create flash card.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
 
     const openModal = () => setCreateCard(true);
     const closeModal = () => setCreateCard(false);
@@ -142,7 +146,7 @@ export default function CreateCard({ status, setStatus, setData }) {
             </button>
 
             <Modal isOpen={createCard} onRequestClose={closeModal} style={customStyles}>
-                <span onClick={closeModal} className='XButton'>x</span>
+                <span onClick={closeModal} className='XButton'><ImCancelCircle /></span>
                 <span className='spanOutsideofForm'>Create A New Flash Card</span>
                 <form className='modalForm'>
                     <div>
