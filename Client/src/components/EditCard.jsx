@@ -52,16 +52,17 @@ function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup, set
 
     const handleUpdate = async () => {
         if (Object.keys(errors).length > 0) return;
-
+    
         try {
             const currentItemData = await fetchJsonData(`http://localhost:3001/flashCards/${id}`);
             const currentDate = new Date();
-            const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
+            const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+            const currentTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
             const updatePayload = {
                 ...currentItemData,
                 question,
                 answer,
-                modifiedDate: currentTime
+                modifiedDate: `${formattedDate} ${currentTime}` 
             };
             const updatedData = await updateJsonData(`http://localhost:3001/flashCards/${id}`, updatePayload);
             setData(currentData => currentData.map(item => item.id === id ? updatedData : item));
@@ -70,6 +71,7 @@ function EditCard({ id, initialQuestion, initialAnswer, setData, closePopup, set
             console.error('Error while updating:', error);
         }
     };
+    
 
     return (
         <div className="editCardModal" onClick={(e) => e.stopPropagation()}>

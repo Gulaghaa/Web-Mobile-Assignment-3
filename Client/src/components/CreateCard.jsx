@@ -10,7 +10,7 @@ const customStyles = {
         backgroundColor: 'transparent',
         display: 'flex',
         justifyContent: 'center',
-        zIndex:'3'
+        zIndex: '3'
     },
     content: {
         width: '600px',
@@ -97,42 +97,43 @@ export default function CreateCard({ status, setStatus, setData }) {
     };
 
     const handleCreateCard = async () => {
-    if (Object.keys(errors).length > 0) return;
+        if (Object.keys(errors).length > 0) return;
 
-    const currentDate = new Date();
-    const currentTime = `${currentDate.getHours()}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
-    const cardToCreate = {
-        ...newCard,
-        createdDate: currentTime,
-        order: flashCards.length 
-    };
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+            const currentTime = `${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}`;
+        const cardToCreate = {
+            ...newCard,
+            createdDate: `${formattedDate} ${currentTime}`,
+            order: flashCards.length
+        };
 
-    try {
-        const response = await postJsonData('http://localhost:3001/flashCards', cardToCreate);
-        if (response) {
-            setNewCard({
-                id: '',
-                question: '',
-                answer: '',
-                imageForQuestion: '',
-                imageForAnswer: '',
-                createdDate: '',
-                modifiedDate: '',
-                category: 'General Knowledge',
-                difficultyLevel: 'easy',
-                status: '',
-                order: 0 // Reset for the next new card
-            });
-            setStatus((prev) => !prev);
-            setCreateCard(false);
-            setErrors({ question: 'Question is required', answer: 'Answer is required', status: 'Status is required' });
-        } else {
-            console.error('Failed to create flash card.');
+        try {
+            const response = await postJsonData('http://localhost:3001/flashCards', cardToCreate);
+            if (response) {
+                setNewCard({
+                    id: '',
+                    question: '',
+                    answer: '',
+                    imageForQuestion: '',
+                    imageForAnswer: '',
+                    createdDate: '',
+                    modifiedDate: '',
+                    category: 'General Knowledge',
+                    difficultyLevel: 'easy',
+                    status: '',
+                    order: 0 // Reset for the next new card
+                });
+                setStatus((prev) => !prev);
+                setCreateCard(false);
+                setErrors({ question: 'Question is required', answer: 'Answer is required', status: 'Status is required' });
+            } else {
+                console.error('Failed to create flash card.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
+    };
 
 
     const openModal = () => setCreateCard(true);

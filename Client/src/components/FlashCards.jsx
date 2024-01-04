@@ -66,42 +66,43 @@ export default function FlashCards() {
     setSortOrder(e.target.value);
   };
 
-  const parseDate = (dateString) => {
-    if (!dateString) {
-      return new Date(0);
-    }
-    const [hours, minutes] = dateString.split(':').map(Number);
-    return new Date().setHours(hours, minutes, 0, 0);
-  };
+const parseDate = (dateString) => {
+  if (!dateString) {
+    return new Date(0).getTime();
+  }
+  const parts = dateString.split(' ');
+  const dateParts = parts[0].split('/').map(Number);
+  const timeParts = parts[1].split(':').map(Number);
+  return new Date(dateParts[2], dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1]).getTime();
+};
 
-  const sortData = (data) => {
-    if (!sortAttribute) {
-      return data;
+const sortData = (data) => {
+  if (!sortAttribute) {
+    return data;
+  }
+  return data.sort((a, b) => {
+    let valueA, valueB;
+    if (sortAttribute === 'createdDate' || sortAttribute === 'modifiedDate') {
+      valueA = parseDate(a[sortAttribute]);
+      valueB = parseDate(b[sortAttribute]);
+    } else if (sortAttribute === 'id') {
+      valueA = parseInt(a[sortAttribute], 10);
+      valueB = parseInt(b[sortAttribute], 10);
+    } else {
+      valueA = a[sortAttribute].toString().toLowerCase();
+      valueB = b[sortAttribute].toString().toLowerCase();
     }
-    return data.sort((a, b) => {
-      let valueA, valueB;
-      if (sortAttribute === 'createdDate' || sortAttribute === 'modifiedDate') {
-        valueA = parseDate(a[sortAttribute]);
-        valueB = parseDate(b[sortAttribute]);
-      } else if (sortAttribute === 'id') {
-        // Sort numerically for 'id'
-        valueA = parseInt(a[sortAttribute], 10);
-        valueB = parseInt(b[sortAttribute], 10);
-      } else {
-        valueA = a[sortAttribute].toString().toLowerCase();
-        valueB = b[sortAttribute].toString().toLowerCase();
-      }
-  
-      if (valueA < valueB) {
-        return sortOrder === 'ascending' ? -1 : 1;
-      }
-      if (valueA > valueB) {
-        return sortOrder === 'ascending' ? 1 : -1;
-      }
-      return 0;
-    });
-  };
-  
+
+    if (valueA < valueB) {
+      return sortOrder === 'ascending' ? -1 : 1;
+    }
+    if (valueA > valueB) {
+      return sortOrder === 'ascending' ? 1 : -1;
+    }
+    return 0;
+  });
+};
+
 
   const filteredData = sortData(data.filter(card => {
     const searchMatch = card.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -189,7 +190,9 @@ export default function FlashCards() {
                         question={event.question}
                         answer={event.answer}
                         createdDate={event.createdDate}
+                        modifiedDate={event.modifiedDate}
                         category={event.category}
+                        difficultyLevel={event.difficultyLevel}
                         id={event.id}
                         image={event.image}
                         setData={setData}
@@ -199,6 +202,7 @@ export default function FlashCards() {
                         status={event.status}
                         onSelect={() => handleCardSelect(event.id)}
                         isSelected={selectedCards.has(event.id)}
+                        
                       />
                     </div>
                   )}
