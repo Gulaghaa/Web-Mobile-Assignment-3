@@ -80,7 +80,7 @@ To run the FlashCards application locally, follow these steps:
 1. Clone the repository to your local machine:
 
    bash
-   git clone https://github.com/yourusername/flashcards-app.git
+   git clone https://github.com/Gulaghaa/Web-Mobile-Assignment-3
    
 
 2. Navigate to the project directory:
