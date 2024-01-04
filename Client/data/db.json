@@ -50,7 +50,7 @@
       "difficultyLevel": "Medium",
       "category": "Geography",
       "status": "Learned",
-      "order": 6
+      "order": 4
     },
     {
       "id": "5",
@@ -141,7 +141,7 @@
       "difficultyLevel": "Hard",
       "category": "Economics",
       "status": "Want to Learn",
-      "order": 10
+      "order": 0
     },
     {
       "id": "12",
@@ -154,7 +154,7 @@
       "difficultyLevel": "Easy",
       "category": "Sociology",
       "status": "Noted",
-      "order": 11
+      "order": 1
     },
     {
       "id": "13",
@@ -167,7 +167,7 @@
       "difficultyLevel": "Medium",
       "category": "Philosophy",
       "status": "Learned",
-      "order": 12
+      "order": 2
     },
     {
       "id": "14",
@@ -180,7 +180,7 @@
       "difficultyLevel": "Hard",
       "category": "Politics",
       "status": "Want to Learn",
-      "order": 14
+      "order": 4
     },
     {
       "id": "15",
@@ -193,7 +193,7 @@
       "difficultyLevel": "Easy",
       "category": "Languages",
       "status": "Noted",
-      "order": 13
+      "order": 3
     }
   ],
   "messages": [

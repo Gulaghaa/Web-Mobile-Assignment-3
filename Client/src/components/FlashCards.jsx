@@ -117,23 +117,19 @@ const sortData = (data) => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
   
-    // Update the order attribute for each item
     const updatedItems = items.map((item, index) => ({ ...item, order: index }));
   
     setData(updatedItems);
   
-    // Persist the new order to the server
     for (const item of updatedItems) {
       await updateJsonData(`http://localhost:3001/flashCards/${item.id}`, item);
     }
   };
   
-  // When fetching data
   useEffect(() => {
     const fetchData = async () => {
       let result = await fetchJsonData('http://localhost:3001/flashCards');
       if (result) {
-        // Sort the data by the order attribute
         result.sort((a, b) => a.order - b.order);
         setData(result);
       }

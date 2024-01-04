@@ -122,7 +122,7 @@ export default function CreateCard({ status, setStatus, setData }) {
                     category: 'General Knowledge',
                     difficultyLevel: 'easy',
                     status: '',
-                    order: 0 // Reset for the next new card
+                    order: 0 
                 });
                 setStatus((prev) => !prev);
                 setCreateCard(false);

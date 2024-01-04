@@ -66,12 +66,10 @@ input:-webkit-autofill:active {
   background-color: #0056b3;
 }
 
-/* Placeholder styles */
 ::placeholder {
   color: #666;
 }
 
-/* Focus styles */
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
@@ -79,7 +77,6 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 1px #007bff;
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
   .contact-container {
     padding: 1rem;
